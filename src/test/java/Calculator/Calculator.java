@@ -34,7 +34,12 @@ public class Calculator extends JFrame {
                 if ("+/-".equals(text)) {
                     displayText = "-";
                     text = "";
+
                 }
+
+                if ("-".equals(displayText)&& ("С".equals(text)))
+                    displayText = "0";
+
                 if ("0".equals(displayText)) {
                     displayText = "";
                 }
@@ -89,19 +94,24 @@ public class Calculator extends JFrame {
                 display.setText("0");
                 operation = text;
 
-                if ("С".equals(text)) {
-
-
-                    display.setText("0");
-                }
-
 
 
             }
         };
 
+        ActionListener droppingActionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                final JButton source = (JButton) e.getSource();
+                final String text = source.getText();
+                String displayText = display.getText();
+                if ("C".equals(text)){
+                    displayText = "0";
 
-
+                }
+                display.setText(displayText);
+            }
+        };
 
 
                 final JPanel numberPanel = new JPanel();
@@ -128,8 +138,10 @@ public class Calculator extends JFrame {
         for (char c : "C+-*/=".toCharArray()){
            final JButton button = new JButton(String.valueOf(c));
            button.addActionListener(actionListener);
+            button.addActionListener(droppingActionListener);
             buttonPanel.add(button);
         }
+
 
 
 
